@@ -33,40 +33,32 @@ class LiberationOfTheSchool extends Program{
 //////////////////////////////////////////////////ALGORITHME PRINCIPALE//////////////////////////////////////////////////////////////////////////
     void jouer(){
 	affichageChargement();
-	Sound theme=newSound("theme.mp3");play(theme,true);// ♪
-        Sound themeC=newSound("themeCombat.mp3");//  ♪
-	Sound themeRencontreLoustique=newSound("themeRencontreLoustique.mp3");// ♪
-	CSVFile fichiercsv = loadCSV("questions_reponses_stock.csv");
+	Sound theme=newSound("theme.mp3");play(theme,true);
 	Joueur eleve = new Joueur();eleve.vie=3;
 	do{
 	    cursor(20,60);print("Es-tu un garçon ou une fille ? (G ou F) :");
 	    cursor(21,80);clearLine();eleve.sexe=readChar(); 
-	}while (eleve.sexe!='G' && eleve.sexe != 'g' && eleve.sexe!='F' && eleve.sexe!='f');clearScreen();
+	}while (eleve.sexe!='G' && eleve.sexe != 'g' && eleve.sexe!='F' && eleve.sexe!='f');
+	
+	clearScreen();
 	cursor(20,65);println("Quel est le nom de ton école ?");
-	cursor(21,80);eleve.ecole = readString();clearScreen();
-
-	//dialogue 1//
+	cursor(21,80);eleve.ecole = readString();
+	clearScreen();
+	String sexe;
 	dialogue1(eleve);
+	affichageChargement();
 	stop(theme);
-	hide();delay(500);show();
-	play(themeRencontreLoustique,true);//  ♪
-	dialogue1rencontre(eleve);
-	stop(themeRencontreLoustique);// ♪
-	affichageChargement();
-	
-	
 	//début de combat avec le loustique de Math//
-        play(themeC,true);//   ♪
-	int[]questionFaites=new int[10];int i=0;
+	Sound themeC=newSound("themeCombat.mp3");play(themeC,true);
+	int[]questionFaites=new int[10];
+	int i=0;
+	CSVFile fichiercsv = loadCSV("questions_reponses_stock.csv");
 	afficherCombat(creerLoustique("Pythongore","math"),eleve,fichiercsv,questionFaites,i);
-        stop(themeC);//  ♪
+        stop(themeC);
 	//fin de combat//
-
-	//dialogue 2//
-	affichageChargement();
-	play(theme,true);// ♪
+	play(theme,true);
 	continuer();
-	//dialogue2(eleve);
+	dialogue2(eleve);
 	
 	
 	//fin du jeu//
@@ -85,15 +77,12 @@ class LiberationOfTheSchool extends Program{
     
     ////   Ne pas répéter la même question ////
     int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle){
-	
 	for(int i=0;i<length(questionsFaites);i++){
 	    if(questionsFaites[i]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer());}
 	    }return questionActuelle;}
 
-
-    ///////////affichage du combat //////////////
         void afficherCombat(Loustique loustique,Joueur eleve,CSVFile fichiercsv,int[]questionFaites,int i){clearScreen();
-	
+		
 	while(loustique.hp!=0 && eleve.vie!=0){
 	//affichage loustique
 	cursor(5,80);println(loustique.nom);
@@ -101,8 +90,8 @@ class LiberationOfTheSchool extends Program{
 	
 	//question
 	int q=randomizer();q=checkQuestionPasFaite(questionFaites,q);	
-	if(loustique.matiere=="français"){q=q+10;}
-	cursor(30,35);print(getCell(fichiercsv,q,1));
+	if(loustique.matiere=="français"){q=q+10;}	
+	cursor(30,20);print(getCell(fichiercsv,q,1));
 	//Enregistrement de la question dans le tableau pour ne pas retomber sur la même question
 	questionFaites[i]=q;
 	i++;
@@ -114,17 +103,17 @@ class LiberationOfTheSchool extends Program{
 	
 	//reponse du joueur
 	cursor(32,80);print(""+eleve.nomDuJoueur+" HP : "+eleve.vie+"/3");
-	cursor(38,70);println("Quel réponse choisissez vous ?");cursor(40,80);
+	cursor(38,70);println("Quel réponse choisissez vous ?");cursor(40,90);
 	//saisie réponse + verification de la réponse et conséquence
 	if(verifierBonneReponse(repJoueur(),fichiercsv,q)){
 	 //bonne réponse
-	    cursor(20,60);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");
+	    cursor(20,70);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");
 	    hide();delay(1100);show();
 	    loustique.hp=(loustique.hp)-25;
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);
 	    
          //Mauvaise réponse
-	}else{cursor(20,60);print("Dommage, la bonne réponse était la n°"+getCell(fichiercsv,q,6));
+	}else{cursor(20,70);print("Dommage, la bonne réponse était la n°"+getCell(fichiercsv,q,6));
 	    hide();delay(2000);show();
 	    eleve.vie=(eleve.vie)-1;
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}
@@ -172,7 +161,7 @@ class LiberationOfTheSchool extends Program{
 
      void valeurIncorrecte(){
 	clearScreen();cursor(10,75);print("Choix incorect !");
-	cursor(14,45);print("Choix incorect mon ami, tu dois choisir un option du menu entre 1 et 4");
+	cursor(14,45);print("Choix incorect mon ami, tu dois choisir un option du menu (1,2,3 ou 4)");
         hide();delay(2300);show();algorithm();}
 
 
@@ -187,7 +176,7 @@ class LiberationOfTheSchool extends Program{
 	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
 	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
 	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
-	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);delay(600);show();clearScreen();}
+	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);delay(1000);show();clearScreen();}
 
     
 //////////////////////////////////////////////Dialogue du début////////////////////////////////////////////////////////////////////////////////////
@@ -235,18 +224,13 @@ class LiberationOfTheSchool extends Program{
 	clearScreen();cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("En route pour "+eleve.ecole+", "+eleve.nomDuJoueur+".");
 	cursor(24,25);hide();print("Vous marchez tous les deux jusque "+eleve.ecole);delay(500);
 	print(".");delay(1000);print(".");delay(1000);print(".");delay(1200);clearLine();show();
-    }
-
-    void dialogue1rencontre(Joueur eleve){
 	cursor(25,5);print("Inconnu");cursor(27,7);print("Stop, qui va là ?");continuer();
 	cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
 	cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
-	cursor(24,5);print("Inconnu");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");hide();delay(1000);show();
+	cursor(24,5);print("Inconnu");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");hide();delay(3000);show();
 	cursor(28,5);print("Pythongore");
 	cursor(30,7);print("Je suis Pythongore, le cadet des Loustiques, je suis spécialiste des mathématiques et je vais vous faire regretter d'être venus jusqu'ici!");
-	cursor(24,5);clearLine();print("Pythongore");continuer();
-
-    }
+	cursor(24,5);clearLine();print("Pythongore");continuer();}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
