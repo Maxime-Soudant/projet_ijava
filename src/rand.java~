@@ -1,0 +1,7 @@
+class rand extends Program{
+
+    void algorithm(){
+	int rand=((int)(random()*6))+1;
+	    println(rand);
+    }
+}
