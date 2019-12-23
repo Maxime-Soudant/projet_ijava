@@ -1,7 +1,7 @@
 import extensions.CSVFile;
 import extensions.Sound;
 class LiberationOfTheSchool extends Program{
-    
+    boolean touche=false;
 //////////////////////////////////////////////////////////Menu/////////////////////////////////////////////////////////////////////////////////////
 	   void afficherMenu(){
 	clearScreen();
@@ -140,25 +140,43 @@ class LiberationOfTheSchool extends Program{
 	if(equals(rep,getCell(fichiercsv,q,6))){return true;}
 	return false; }
     
+  
     String repJoueur(){
+	enableKeyTypedInConsole(false);
         String rep=readString();
 	while(charAt(rep,0)>'4' || charAt(rep,0)<'1'){
 	    cursor(38,10);clearLine();println("Tu dois choisir entre les réponses de 1 et 4");
-	    cursor(40,20);clearLine();rep=readString();}return rep;}
+	    cursor(40,20);clearLine();rep=readString();
+	}return rep;}
 
 
          
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ////////////////////////////////////////////////////// Programmes annexes / dialogues /////////////////////////////////////////////////////////////
-    
     void continuer (){
 	    char continuer='A';
-	    cursor(34,5);print("'C' pour continuer");
-	    cursor(32,5);continuer=readChar();
-	    if(continuer!='C' && continuer!='c'){continuer();}
-	    clearScreen();}
-	
+	    cursor(34,5);
+	    print("'C' pour continuer");
+	    cursor(32,5);
+	    continuer=readChar();
+	    if(continuer!='C' && continuer!='c'){
+		continuer();
+	    }
+	    	clearScreen();
+	    }
+    /* void continuer (){
+	hide();cursor(34,5);print("'C' pour continuer");cursor(35,5);
+	enableKeyTypedInConsole(true);
+	while(!touche){delay(10);}
+       	enableKeyTypedInConsole(false);
+	touche=false;show();}
+    
+	    
+	void keyTypedInConsole(char key){
+	    if(key=='c'||key=='C'){clearScreen();touche=true;}
+	    else{cursor(35,5);clearLine();} }
+    */
 
 	void algorithm(){
 		int choixMenu;
