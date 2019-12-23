@@ -253,3 +253,4 @@ class LiberationOfTheSchool extends Program{
 }
 
 //Faire en sorte qu'il y est un message d'erreur lorsque continue continuer !   <== j'ai pas compris ta phrase 
+//ouai c'etait un memo pour moi à la base x) en gros pour cotinuer faut appuyer sur C bah si on met autre chose que c ca crash fallait que je modifie ca 
