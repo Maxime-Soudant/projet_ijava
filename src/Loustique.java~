@@ -1,6 +1,0 @@
-class Loustique {
-    String nom;
-    String matière;
-    int hp;
-
-}

@@ -57,8 +57,8 @@ class LiberationOfTheSchool extends Program{
 	
 	//début de combat avec le loustique de Math//
         play(themeC,true);//   ♪
-	int[]questionFaites=new int[10];int i=0;
-	afficherCombat(creerLoustique("Pythongore","math"),eleve,fichiercsv,questionFaites,i);
+	int[]questionFaitesMath=new int[10];int i=0;
+	afficherCombat(creerLoustique("Pythongore","math"),eleve,fichiercsv,questionFaitesMath,i);
         stop(themeC);//  ♪
 	//fin de combat//
 
@@ -68,7 +68,19 @@ class LiberationOfTheSchool extends Program{
 	continuer();
 	//dialogue2(eleve);
 	
-	
+	//début du combat avec le loustique de Français//
+	play(themeC,true);//   ♪
+	int[]questionFaitesFrancais=new int[20];int j=0;
+	afficherCombat(creerLoustique("Rimbaudelaire","francais"),eleve,fichiercsv,questionFaitesFrancais,j);
+        stop(themeC);//  ♪
+	//Fin de combat//
+
+	//dialogue 3//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
+	//dialogue2(eleve);
+
 	//fin du jeu//
 	}
 
@@ -92,7 +104,7 @@ class LiberationOfTheSchool extends Program{
 
 
     ///////////affichage du combat //////////////
-        void afficherCombat(Loustique loustique,Joueur eleve,CSVFile fichiercsv,int[]questionFaites,int i){clearScreen();
+    void afficherCombat(Loustique loustique,Joueur eleve,CSVFile fichiercsv,int[]questionFaites,int i){clearScreen();
 	
 	while(loustique.hp!=0 && eleve.vie!=0){
 	//affichage loustique
@@ -101,7 +113,7 @@ class LiberationOfTheSchool extends Program{
 	
 	//question
 	int q=randomizer();q=checkQuestionPasFaite(questionFaites,q);	
-	if(loustique.matiere=="français"){q=q+10;}
+	if(loustique.matiere=="francais"){q=q+10;}
 	cursor(30,35);print(getCell(fichiercsv,q,1));
 	//Enregistrement de la question dans le tableau pour ne pas retomber sur la même question
 	questionFaites[i]=q;
@@ -116,6 +128,7 @@ class LiberationOfTheSchool extends Program{
 	cursor(32,80);print(""+eleve.nomDuJoueur+" HP : "+eleve.vie+"/3");
 	cursor(38,70);println("Quel réponse choisissez vous ?");cursor(40,80);
 	//saisie réponse + verification de la réponse et conséquence
+
 	if(verifierBonneReponse(repJoueur(),fichiercsv,q)){
 	 //bonne réponse
 	    cursor(20,60);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");
@@ -129,7 +142,6 @@ class LiberationOfTheSchool extends Program{
 	    eleve.vie=(eleve.vie)-1;
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}
 	}
-	
 	//cas de victoire ou défaite//
 	if(victoireOuDefaite(loustique)){clearScreen();cursor(20,50);print("Vous avez vaincu "+loustique.nom+" félicitations !");}
 	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance?");}}
@@ -142,11 +154,14 @@ class LiberationOfTheSchool extends Program{
     
   
     String repJoueur(){
-	enableKeyTypedInConsole(false);
-        String rep=readString();
+	enableKeyTypedInConsole(false); // je comprend pas à quoi ca sert ici ? mais le pb vient pas de là j'ai essayer en l'enlevant
+    	println("Entre dans le repJoueur sans soucis et attend une entrée clavier avant de passer au readString");
+        String rep=readString(); // Le pb est donc, je pense, entre les 2 print ln ... je comprend pas, y a rien a part le readString ...
+        println("a passé le readString");
 	while(charAt(rep,0)>'4' || charAt(rep,0)<'1'){
 	    cursor(38,10);clearLine();println("Tu dois choisir entre les réponses de 1 et 4");
-	    cursor(40,20);clearLine();rep=readString();
+	    cursor(40,20);clearLine();println("dans");rep=readString();
+	    println("apres");
 	}return rep;}
 
 
@@ -154,7 +169,7 @@ class LiberationOfTheSchool extends Program{
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ////////////////////////////////////////////////////// Programmes annexes / dialogues /////////////////////////////////////////////////////////////
-    void continuer (){
+    /*void continuer (){
 	    char continuer='A';
 	    cursor(34,5);
 	    print("'C' pour continuer");
@@ -164,8 +179,8 @@ class LiberationOfTheSchool extends Program{
 		continuer();
 	    }
 	    	clearScreen();
-	    }
-    /* void continuer (){
+	    }*/
+    void continuer (){
 	hide();cursor(34,5);print("'C' pour continuer");cursor(35,5);
 	enableKeyTypedInConsole(true);
 	while(!touche){delay(10);}
@@ -176,7 +191,7 @@ class LiberationOfTheSchool extends Program{
 	void keyTypedInConsole(char key){
 	    if(key=='c'||key=='C'){clearScreen();touche=true;}
 	    else{cursor(35,5);clearLine();} }
-    */
+    
 
 	void algorithm(){
 		int choixMenu;
@@ -246,7 +261,7 @@ class LiberationOfTheSchool extends Program{
 	cursor(24,7);print("et je ne pense pas posséder assez de connaissances pour les vaincre à moi seul …");
 	cursor(26,5);print("𝘿𝙞𝙚𝙪 :");
 	cursor(28,7);print("Très bien Gabriel, j’ai justement un élève à te présenter, il s’appelle "+eleve.nomDuJoueur+", il vient de l'école "+eleve.ecole+", il est certainement le seul élève qui ait survécu !");
-	cursor(29,7);print(eleve.nomDuJoueur+", nous avons besoin de toi pour délivrer tes camarades, es-tu prêt à nous aider ?");continuer();
+	cursor(29,7);print(eleve.nomDuJoueur+"Nous avons besoin de toi pour délivrer tes camarades, es-tu prêt à nous aider ?");continuer();
 	cursor(20,5);print("𝘿𝙞𝙚𝙪 :");
 	cursor(22,7);print("Parfait dans ce cas, partez tout de suite, il n’y a pas une minute à perdre !");
 	cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Super ! Accroches toi "+eleve.nomDuJoueur+", ça va secouer !");
