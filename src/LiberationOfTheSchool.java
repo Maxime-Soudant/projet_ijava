@@ -1,9 +1,10 @@
 import extensions.CSVFile;
 import extensions.Sound;
 class LiberationOfTheSchool extends Program{
-    boolean touche=false;
+    boolean touche=false;char var='v';String sexe=" ";char rep='v';char var2=' ';
 //////////////////////////////////////////////////////////Menu/////////////////////////////////////////////////////////////////////////////////////
-	   void afficherMenu(){
+    void afficherMenu(){
+	hide();
 	clearScreen();
 	cursor(10,70);print("Liberation Of The School");
 	cursor(20,10);print("1- Jouer");
@@ -11,12 +12,26 @@ class LiberationOfTheSchool extends Program{
 	cursor(24,10);print("3- Credits");
 	cursor(26,10);print("4- Quitter");
 	cursor(30,10);println("Que veux tu faire ?");
+	choixMenu();
+	switch(var2){
+	case 'j':
+	    var='v';jouer();
+	case 'p':
+	    var='v';projet();
+	case 'c':
+	    var='v';credits();
+	case 'q':
+	    clearScreen();cursor(25,75);println("Au revoir ! :)");
+	}
     }
+    
     void projet(){
 	clearScreen();
-	println("Présentation du projet :");
-	println("\n\n\nPour retourner au menu, tape 'r' !");
-	if(readChar()=='r' || readChar()=='R'){algorithm();}
+	cursor(10,50);print("Présentation du projet :");
+	cursor(40,5);print("Pour retourner au menu, tape 'r' !");
+	//if(readChar()=='r' || readChar()=='R'){algorithm();}
+	 choixRetour();var='v';
+	 afficherMenu();
     }
 
     void credits(){
@@ -24,31 +39,31 @@ class LiberationOfTheSchool extends Program{
 	cursor(10,70);print("Crédits :");
 	cursor(14,40);print("Lucas DELESTREE");
 	cursor(15,40);print("Maxime SOUDANT");
-	cursor(40,5);print("Pour retourner au menu, tape 'r'   ");
-	if(readChar()=='r' || readChar()=='R'){algorithm();}
+	cursor(40,5);print("Pour retourner au menu, tape 'r' !");
+	choixRetour();var='v';
+	afficherMenu();
     }
 
-//\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \
    
-//////////////////////////////////////////////////ALGORITHME PRINCIPALE//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////ALGORITHME PRINCIPALE///////////////////////////////////////////////////////////////////////////
+    
     void jouer(){
-	affichageChargement();
+	enableKeyTypedInConsole(false);touche=true;affichageChargement();
 	Sound theme=newSound("theme.mp3");play(theme,true);// ♪
         Sound themeC=newSound("themeCombat.mp3");//  ♪
 	Sound themeRencontreLoustique=newSound("themeRencontreLoustique.mp3");// ♪
-	CSVFile fichiercsv = loadCSV("questions_reponses_stock.csv");
-	Joueur eleve = new Joueur();eleve.vie=3;
-	do{
-	    cursor(20,60);print("Es-tu un garçon ou une fille ? (G ou F) :");
-	    cursor(21,80);clearLine();eleve.sexe=readChar(); 
-	}while (eleve.sexe!='G' && eleve.sexe != 'g' && eleve.sexe!='F' && eleve.sexe!='f');clearScreen();
-	cursor(20,65);println("Quel est le nom de ton école ?");
-	cursor(21,80);eleve.ecole = readString();clearScreen();
+	CSVFile fichiercsv=loadCSV("questions_reponses_stock.csv");
+	Joueur eleve = new Joueur(); eleve.vie=3;
+	choixSexe();
+	cursor(20,65); println("Quel est le nom de ton école ?");
+	cursor(21,80); eleve.ecole=readString(); clearScreen();
 
 	//dialogue 1//
 	dialogue1(eleve);
 	stop(theme);
-	hide();delay(500);show();
+	delay(500);
 	play(themeRencontreLoustique,true);//  ♪
 	dialogue1rencontre(eleve);
 	stop(themeRencontreLoustique);// ♪
@@ -59,7 +74,7 @@ class LiberationOfTheSchool extends Program{
         play(themeC,true);//   ♪
 	int[]questionFaitesMath=new int[10];int i=0;
 	afficherCombat(creerLoustique("Pythongore","math"),eleve,fichiercsv,questionFaitesMath,i);
-        stop(themeC);//  ♪
+        stop(themeC);eleve.vie=3;//  ♪
 	//fin de combat//
 
 	//dialogue 2//
@@ -70,16 +85,16 @@ class LiberationOfTheSchool extends Program{
 	
 	//début du combat avec le loustique de Français//
 	play(themeC,true);//   ♪
-	int[]questionFaitesFrancais=new int[20];int j=0;
-	afficherCombat(creerLoustique("Rimbaudelaire","francais"),eleve,fichiercsv,questionFaitesFrancais,j);
-        stop(themeC);//  ♪
+	int[]questionFaitesFrancais=new int[10];i=0;
+	afficherCombat(creerLoustique("Rimbaudelaire","francais"),eleve,fichiercsv,questionFaitesFrancais,i);
+        stop(themeC);eleve.vie=3;//  ♪
 	//Fin de combat//
 
 	//dialogue 3//
 	affichageChargement();
 	play(theme,true);// ♪
 	continuer();
-	//dialogue2(eleve);
+	//dialogue3(eleve);
 
 	//fin du jeu//
 	}
@@ -96,139 +111,168 @@ class LiberationOfTheSchool extends Program{
     int randomizer(){return (int)(random()*10)+1;}
     
     ////   Ne pas répéter la même question ////
-    int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle){
-	
-	for(int i=0;i<length(questionsFaites);i++){
-	    if(questionsFaites[i]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer());}
-	    }return questionActuelle;}
+    int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle,String matiere){	
+	for(int idx=0;idx<length(questionsFaites);idx++){
+	    if(equals(matiere,"math")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer(),"math");}return questionActuelle;}
+	    else if(equals(matiere,"francais")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"francais");}return questionActuelle;}
+	}
+	return 0;}
 
+
+	
+		
+		   
+		
 
     ///////////affichage du combat //////////////
     void afficherCombat(Loustique loustique,Joueur eleve,CSVFile fichiercsv,int[]questionFaites,int i){clearScreen();
 	
-	while(loustique.hp!=0 && eleve.vie!=0){
+	while(loustique.hp>0 && eleve.vie>0){
 	//affichage loustique
-	cursor(5,80);println(loustique.nom);
+	cursor(5,75);println(loustique.nom);
 	cursor(10,60);print("Points de vie restants de "+loustique.nom+" : "+loustique.hp+"/100");
 	
 	//question
-	int q=randomizer();q=checkQuestionPasFaite(questionFaites,q);	
-	if(loustique.matiere=="francais"){q=q+10;}
-	cursor(30,35);print(getCell(fichiercsv,q,1));
-	//Enregistrement de la question dans le tableau pour ne pas retomber sur la même question
+	int q=randomizer();
+	q=checkQuestionPasFaite(questionFaites,q,loustique.matiere);		
+	cursor(30,25);print(getCell(fichiercsv,q,1));
+	//Enregistrement de la question dans le tableau(contenant toutes les questions déjà faites) pour ne pas retomber sur la même question
 	questionFaites[i]=q;
 	i++;
 	//Afficher les reponses
-	cursor(34,55);print("1- "+getCell(fichiercsv,q,2));
-	cursor(36,55);print("3- "+getCell(fichiercsv,q,4));	
+	cursor(34,40);print("1- "+getCell(fichiercsv,q,2));
+	cursor(36,40);print("3- "+getCell(fichiercsv,q,4));	
 	cursor(34,115);print("2- "+getCell(fichiercsv,q,3));	
 	cursor(36,115);print("4- "+getCell(fichiercsv,q,5));
 	
 	//reponse du joueur
-	cursor(32,80);print(""+eleve.nomDuJoueur+" HP : "+eleve.vie+"/3");
-	cursor(38,70);println("Quel réponse choisissez vous ?");cursor(40,80);
+	cursor(32,75);print(""+eleve.nomDuJoueur+" HP : "+eleve.vie+"/3");
+	cursor(38,65);println("Quel réponse choisissez vous ?");cursor(40,80);
+	
 	//saisie réponse + verification de la réponse et conséquence
-
 	if(verifierBonneReponse(repJoueur(),fichiercsv,q)){
 	 //bonne réponse
-	    cursor(20,60);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");
-	    hide();delay(1100);show();
+	    cursor(20,60);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");delay(1100);
 	    loustique.hp=(loustique.hp)-25;
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);
 	    
          //Mauvaise réponse
-	}else{cursor(20,60);print("Dommage, la bonne réponse était la n°"+getCell(fichiercsv,q,6));
-	    hide();delay(2000);show();
+	}else{cursor(20,60);print("Dommage, la bonne réponse était la n°"+getCell(fichiercsv,q,6));delay(2000);
 	    eleve.vie=(eleve.vie)-1;
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}
 	}
 	//cas de victoire ou défaite//
 	if(victoireOuDefaite(loustique)){clearScreen();cursor(20,50);print("Vous avez vaincu "+loustique.nom+" félicitations !");}
-	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance?");}}
+	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance..");}}
     
-    boolean victoireOuDefaite(Loustique loustique){if(loustique.hp==0){return true;}else{return false;}}
+    boolean victoireOuDefaite(Loustique loustique){if(loustique.hp<=0){return true;}else{return false;}}
     
-    boolean verifierBonneReponse(String rep,CSVFile fichiercsv,int q){
-	if(equals(rep,getCell(fichiercsv,q,6))){return true;}
+    boolean verifierBonneReponse(char rep,CSVFile fichiercsv,int q){
+	if(rep==charAt(getCell(fichiercsv,q,6),0)){return true;}
 	return false; }
     
   
-    String repJoueur(){
-	enableKeyTypedInConsole(false); // je comprend pas à quoi ca sert ici ? mais le pb vient pas de là j'ai essayer en l'enlevant
-    	println("Entre dans le repJoueur sans soucis et attend une entrée clavier avant de passer au readString");
-        String rep=readString(); // Le pb est donc, je pense, entre les 2 print ln ... je comprend pas, y a rien a part le readString ...
-        println("a passé le readString");
-	while(charAt(rep,0)>'4' || charAt(rep,0)<'1'){
-	    cursor(38,10);clearLine();println("Tu dois choisir entre les réponses de 1 et 4");
-	    cursor(40,20);clearLine();println("dans");rep=readString();
-	    println("apres");
-	}return rep;}
-
-
-         
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ////////////////////////////////////////////////////// Programmes annexes / dialogues /////////////////////////////////////////////////////////////
-    /*void continuer (){
-	    char continuer='A';
-	    cursor(34,5);
-	    print("'C' pour continuer");
-	    cursor(32,5);
-	    continuer=readChar();
-	    if(continuer!='C' && continuer!='c'){
-		continuer();
-	    }
-	    	clearScreen();
-	    }*/
-    void continuer (){
-	hide();cursor(34,5);print("'C' pour continuer");cursor(35,5);
+    char repJoueur(){
+	var='r';
+	rep='v';
 	enableKeyTypedInConsole(true);
-	while(!touche){delay(10);}
-       	enableKeyTypedInConsole(false);
-	touche=false;show();}
+	touche=false;
+	while(!touche){delay(1);}
+	enableKeyTypedInConsole(false);
+        return rep;}
     
-	    
-	void keyTypedInConsole(char key){
+    void choixSexe(){
+	var='s';
+	cursor(20,55);print("Es-tu un garçon ou une fille ? (appuies sur G ou F) :");cursor(21,80);
+	enableKeyTypedInConsole(true);
+	touche=false;
+	while(!touche){delay(1);}clearScreen();
+        enableKeyTypedInConsole(false);}
+    
+    void continuer (){
+	var='c';
+	cursor(34,5);print("'C' pour continuer");cursor(35,5);
+	enableKeyTypedInConsole(true);
+	touche=false;
+	while(!touche){delay(1);}
+	enableKeyTypedInConsole(false);}
+        
+    void choixRetour(){
+	  var='b';cursor(31,10);
+	  enableKeyTypedInConsole(true);
+	  touche=false;
+	  while(!touche){delay(1);}
+	  enableKeyTypedInConsole(false);
+      }
+
+     void choixMenu(){
+	var='m';cursor(31,10);
+	enableKeyTypedInConsole(true);
+	touche=false;
+	while(!touche){delay(1);}
+	enableKeyTypedInConsole(false);}
+
+/// entrée au clavier
+    void keyTypedInConsole(char key){
+	switch (var){
+	    //continuer();
+	case 'c':
 	    if(key=='c'||key=='C'){clearScreen();touche=true;}
-	    else{cursor(35,5);clearLine();} }
-    
+	    else{cursor(35,5);clearLine();}
+	    
+	    //choixSexe();
+	case 's':
+	    if(key=='g'||key=='G'){clearScreen();sexe="garçon";touche=true;}
+	    else if(key=='f'||key=='F'){clearScreen();sexe="fille";touche=true;}
+	    else{cursor(21,80);clearLine();}
+	    
+	    //repJoueur();
+	case'r':
+	    if(key=='1'||key=='&'){rep='1';touche=true;}
+	    else if(key=='2'||key=='é'){rep='2';touche=true;}
+	    else if(key=='3'||key=='\"'){rep='3';touche=true;}
+	    else if(key=='4'||key=='\''){rep='4';touche=true;}
+	    else{if(var=='r'){cursor(25,63);clearLine();println("Tu dois choisir entre les réponses de 1 et 4");cursor(40,80);clearLine();}}
+	    
+	    //menu();
+	case 'm':
+	    if(key=='1'||key=='&'){var2='j';touche=true;}
+	    else if(key=='2'||key=='é'){var2='p';touche=true;}
+	    else if(key=='3'||key=='\"'){var2='c';touche=true;}
+	    else if(key=='4'||key=='\''){var2='q';touche=true;}
+	    else{if(var=='m'){cursor(27,60);println("Choix incorect !");print("Tu dois choisir entre les options de 1 à 4");cursor(31,10);clearLine();}}
+	    
+	    // retour au menu
+     	case 'b':
+		if(key=='r'||key=='R'){touche=true;}
+		else{if(var=='b'){cursor(31,10);clearLine();cursor(32,30);print("Touche incorrecte");delay(1500);clearLine();}}
+	}
+    }
 
-	void algorithm(){
-		int choixMenu;
-		clearScreen();afficherMenu();
-		cursor(31,10);choixMenu=readInt();
-		if(choixMenu==1){jouer();}
-		else if(choixMenu==2){projet();}
-		else if(choixMenu==3){credits();}
-		else if(choixMenu==4){println("au revoir");}
-                else{valeurIncorrecte();}}
-
-     void valeurIncorrecte(){
-	clearScreen();cursor(10,75);print("Choix incorect !");
-	cursor(14,45);print("Choix incorect mon ami, tu dois choisir un option du menu entre 1 et 4");
-        hide();delay(2300);show();algorithm();}
-
-
-		
-		
-		
+	
+void algorithm(){
+	    clearScreen();
+	    afficherMenu();}
 
 
     void affichageChargement(){
-	clearScreen();cursor(15,80);print("Chargement");hide();cursor(20,55);
-	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
-	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
-	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
-	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);
-	print("///");delay(80);print("///");delay(80);print("///");delay(80);print("///");delay(80);delay(600);show();clearScreen();}
+	clearScreen();cursor(15,80);print("Chargement");cursor(20,55);
+	print("///");delay(60);print("///");delay(60);print("///");delay(60);print("///");delay(60);
+	print("///");delay(60);print("///");delay(60);print("///");delay(60);print("///");delay(60);
+	print("///");delay(60);print("///");delay(60);print("///");delay(60);print("///");delay(60);
+	print("///");delay(60);print("///");delay(60);print("///");delay(60);print("///");delay(60);
+	print("///");delay(60);print("///");delay(60);print("///");delay(60);print("///");delay(60);delay(500);clearScreen();}
 
     
 //////////////////////////////////////////////Dialogue du début////////////////////////////////////////////////////////////////////////////////////
     
     void dialogue1(Joueur eleve){
 	String test="";
-	String sexe="fille";
-	if(eleve.sexe=='g'||eleve.sexe=='G'){sexe="garçon";}
 	cursor(20,5);print("𝘿𝙞𝙚𝙪 :");
 	cursor(22,7);print("Salutations jeune " + sexe + ", et bienvenue dans Liberation Of The School, le jeu d’aventure dans lequel tu vas devenir un aventurier hors pair en parcourant ta ville !\n      Tu vas pouvoir rencontrer tes camarades qui auront des missions à te proposer, il faudra les remplir pour les aider.\n      Ces missions peuvent sembler très simples au début mais se corseront rapidement, tu verras. Avant de commencer, peux-tu me dire comment tu t’appelles ?");
 	cursor(26,80);clearLine();eleve.nomDuJoueur=readString();clearScreen();
@@ -266,24 +310,20 @@ class LiberationOfTheSchool extends Program{
 	cursor(22,7);print("Parfait dans ce cas, partez tout de suite, il n’y a pas une minute à perdre !");
 	cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Super ! Accroches toi "+eleve.nomDuJoueur+", ça va secouer !");
 	clearScreen();cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("En route pour "+eleve.ecole+", "+eleve.nomDuJoueur+".");
-	cursor(24,25);hide();print("Vous marchez tous les deux jusque "+eleve.ecole);delay(500);
-	print(".");delay(1000);print(".");delay(1000);print(".");delay(1200);clearLine();show();
-    }
+	cursor(24,25);print("Vous marchez tous les deux jusque "+eleve.ecole);delay(500);
+	print(".");delay(1000);print(".");delay(1000);print(".");delay(1200);clearLine();}
 
     void dialogue1rencontre(Joueur eleve){
 	cursor(25,5);print("Inconnu");cursor(27,7);print("Stop, qui va là ?");continuer();
 	cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
 	cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
-	cursor(24,5);print("Inconnu");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");hide();delay(1000);show();
-	cursor(28,5);print("Pythongore");
-	cursor(30,7);print("Je suis Pythongore, le cadet des Loustiques, je suis spécialiste des mathématiques et je vais vous faire regretter d'être venus jusqu'ici!");
-	cursor(24,5);clearLine();print("Pythongore");continuer();
-
-    }
+	cursor(24,5);print("Inconnu");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");continuer();
+	cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
+	cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
+	cursor(24,5);print("Pythongore");cursor(28,5);print("Pythongore");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");
+	cursor(30,7);print("Je suis Pythongore, le cadet des Loustiques, je suis spécialiste des mathématiques et je vais vous faire regretter d'être venus jusqu'ici!");continuer();}
+    
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 }
 
-//Faire en sorte qu'il y est un message d'erreur lorsque continue continuer !   <== j'ai pas compris ta phrase 
-//ouai c'etait un memo pour moi à la base x) en gros pour cotinuer faut appuyer sur C bah si on met autre chose que c ca crash fallait que je modifie ca 
