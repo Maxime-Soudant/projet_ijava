@@ -96,6 +96,82 @@ class LiberationOfTheSchool extends Program{
 	continuer();
 	//dialogue3(eleve);
 
+	//début du combat avec le loustique d'Histoire//
+	play(themeC,true);//   ♪
+	int[]questionFaitesHistoire=new int[10];i=0;
+	afficherCombat(creerLoustique("Napoléonard Bonaparte","histoire"),eleve,fichiercsv,questionFaitesHistoire,i);
+        stop(themeC);eleve.vie=3;//  ♪
+	//Fin de combat//
+
+	//dialogue 4//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
+	//dialogue4(eleve);
+
+	//début du combat avec le loustique de Géographie//
+	play(themeC,true);//   ♪
+	int[]questionFaitesGeographie=new int[10];i=0;
+	afficherCombat(creerLoustique("Cristophe Colombe","geographie"),eleve,fichiercsv,questionFaitesGeographie,i);
+        stop(themeC);eleve.vie=3;//  ♪
+	//Fin de combat//
+
+	//dialogue 5//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
+	//dialogue5(eleve);
+
+	//début du combat avec le loustique de Français//
+	play(themeC,true);//   ♪
+	int[]questionFaitesAnglais=new int[10];i=0;
+	afficherCombat(creerLoustique("Miss California","anglais"),eleve,fichiercsv,questionFaitesAnglais,i);
+        stop(themeC);eleve.vie=3;//  ♪
+	//Fin de combat//
+
+	//dialogue 6//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
+	//dialogue6(eleve);
+
+	//début du combat avec le loustique de Français//
+	play(themeC,true);//   ♪
+	int[]questionFaitesArt=new int[10];i=0;
+	afficherCombat(creerLoustique("Eduardo DelArte","art"),eleve,fichiercsv,questionFaitesArt,i);
+        stop(themeC);eleve.vie=3;//  ♪
+	//Fin de combat//
+
+	//dialogue 7//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
+	//dialogue7(eleve);
+
+	//début du combat avec le loustique de Français//
+	play(themeC,true);//   ♪
+	int[]questionFaitesSciences=new int[10];i=0;
+	afficherCombat(creerLoustique("Thomas Tesla","sciences"),eleve,fichiercsv,questionFaitesSciences,i);
+        stop(themeC);eleve.vie=3;//  ♪
+	//Fin de combat//
+
+	//dialogue 8//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
+	//dialogue8(eleve);
+
+	//début du combat avec le loustique Final//
+	play(themeC,true);//   ♪
+	int[]questionFaitesFinal=new int[10];i=0;
+	afficherCombat(creerLoustique("Chef des Loustiques","final"),eleve,fichiercsv,questionFaitesFinal,i);
+        stop(themeC);eleve.vie=3;//  ♪
+	//Fin de combat//
+
+    //dialogue final//
+	affichageChargement();
+	play(theme,true);// ♪
+	continuer();
 	//fin du jeu//
 	}
 
@@ -117,6 +193,18 @@ class LiberationOfTheSchool extends Program{
 		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer(),"math");}return questionActuelle;}
 	    else if(equals(matiere,"francais")){
 		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"francais");}return questionActuelle;}
+		else if(equals(matiere,"histoire")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"histoire");}return questionActuelle;}
+		else if(equals(matiere,"geographie")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"geographie");}return questionActuelle;}
+		else if(equals(matiere,"anglais")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"anglais");}return questionActuelle;}
+		else if(equals(matiere,"art")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"art");}return questionActuelle;}
+		else if(equals(matiere,"sciences")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"sciences");}return questionActuelle;}
+		else if(equals(matiere,"final")){
+		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"final");}return questionActuelle;}
 	}
 	return 0;}
 
@@ -136,6 +224,21 @@ class LiberationOfTheSchool extends Program{
 	
 	//question
 	int q=randomizer();
+	if (equals(loustique.matiere, "francais")){
+		q=q+10;
+	}else if(equals(loustique.matiere,"histoire")){
+		q=q+20;
+	}else if(equals(loustique.matiere,"geographie")){
+		q=q+30;
+	}else if(equals(loustique.matiere,"anglais")){
+		q=q+40;
+	}else if(equals(loustique.matiere,"art")){
+		q=q+50;
+	}else if(equals(loustique.matiere,"sciences")){
+		q=q+60;
+	}else if(equals(loustique.matiere,"final")){
+		q=q+70;
+	}
 	q=checkQuestionPasFaite(questionFaites,q,loustique.matiere);		
 	cursor(30,25);print(getCell(fichiercsv,q,1));
 	//Enregistrement de la question dans le tableau(contenant toutes les questions déjà faites) pour ne pas retomber sur la même question
@@ -301,7 +404,7 @@ void algorithm(){
 	continuer();
 	cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
 	cursor(22,7);print("Bien Sûr !  Mais je vais avoir besoin d’aide car les loustiques sont très forts !");
-	cursor(23,7);print("Ils sont au nombre de 6 et possèdent chacuns une spécialité allant des mathématiques au français en passant par l’anglais, les sciences et bien d’autres");
+	cursor(23,7);print("Ils sont au nombre de 7 et possèdent chacuns une spécialité allant des mathématiques au français en passant par l’anglais, les sciences et bien d’autres");
 	cursor(24,7);print("et je ne pense pas posséder assez de connaissances pour les vaincre à moi seul …");
 	cursor(26,5);print("𝘿𝙞𝙚𝙪 :");
 	cursor(28,7);print("Très bien Gabriel, j’ai justement un élève à te présenter, il s’appelle "+eleve.nomDuJoueur+", il vient de l'école "+eleve.ecole+", il est certainement le seul élève qui ait survécu !");
