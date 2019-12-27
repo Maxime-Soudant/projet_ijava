@@ -186,6 +186,27 @@ class LiberationOfTheSchool extends Program{
     
     ////   Ne pas répéter la même question //
     int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle,String matiere){
+
+    	/*int x=0;
+	switch(matiere){
+	case "francais":
+	    x=10;
+	case "geographie":
+	    x=20;
+	case "anglais":						-------->Ne fonctionne pas
+	    x=30;
+	case "art":
+	    x=40;
+	case "sciences":
+            x=50;
+	case "final":
+	    x=60;
+
+	}
+	for(int idx=0;idx<length(questionsFaites);idx++){
+	    if(questionsFaites[idx]==questionActuelle+x){return checkQuestionPasFaite(questionsFaites,randomizer(),matiere);}}
+	return questionActuelle+x;
+    }*/
 	
 	int q=randomizer();
 	if (equals(matiere, "francais")){
@@ -266,8 +287,12 @@ class LiberationOfTheSchool extends Program{
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}
 	}
 	//cas de victoire ou défaite//
-	if(victoireOuDefaite(loustique)){clearScreen();cursor(20,50);print("Vous avez vaincu "+loustique.nom+" félicitations !");}
-	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance..");}}
+	if(victoireOuDefaite(loustique)){clearScreen();cursor(20,50);print("Vous avez vaincu "+loustique.nom+" félicitations !");continuer();}
+	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance en appuyant sur 'c'...");
+	continuer();
+	affichageChargement();
+	eleve.vie=3;
+	afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}}
     
     boolean victoireOuDefaite(Loustique loustique){if(loustique.hp<=0){return true;}else{return false;}}
     
