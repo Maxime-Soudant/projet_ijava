@@ -186,37 +186,26 @@ class LiberationOfTheSchool extends Program{
     
     ////   Ne pas répéter la même question //
     int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle,String matiere){
-	int x=0;
-	/*switch(matiere){
-	case "francais":
-	    x=10;
-	    break;
-	case "math":
-		x=20;
-		break;
-	case "histoire":
-		x=30;
-		break;
-	case "geographie":  --> ca bugg avec ca (index out a bound ...) pcq on a pas un tableau de question faite mais un tableau par matière, il ne depasse donc pas 10 emplacements, en enlevant le switch case ca marche ^^
-	    x=40;
-	    break;
-	case "anglais":
-	    x=50;
-	    break;
-	case "art":
-	    x=60;
-	    break;
-	case "sciences":
-        x=70;
-        break;
-	case "final":
-	    x=80;
-	    break;
-
-	}*/
+	
+	int q=randomizer();
+	if (equals(matiere, "francais")){
+		q=q+10;
+	}else if(equals(matiere,"histoire")){
+		q=q+20;
+	}else if(equals(matiere,"geographie")){
+		q=q+30;
+	}else if(equals(matiere,"anglais")){
+		q=q+40;
+	}else if(equals(matiere,"art")){
+		q=q+50;
+	}else if(equals(matiere,"sciences")){
+		q=q+60;
+	}else if(equals(matiere,"final")){
+		q=q+70;
+	}
 	for(int idx=0;idx<length(questionsFaites);idx++){
-	    if(questionsFaites[idx]==questionActuelle+x){return checkQuestionPasFaite(questionsFaites,randomizer(),matiere);}}
-	return questionActuelle+x;
+	    if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,q,matiere);}}
+	return questionActuelle;
     }
 
        	
