@@ -1,5 +1,4 @@
-import extensions.CSVFile;
-import extensions.Sound;
+import extensions.*;
 class LiberationOfTheSchool extends Program{
     boolean touche=false;char var='v';String sexe=" ";char rep='v';char var2=' ';
 //////////////////////////////////////////////////////////Menu/////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +28,6 @@ class LiberationOfTheSchool extends Program{
 	clearScreen();
 	cursor(10,50);print("Présentation du projet :");
 	cursor(40,5);print("Pour retourner au menu, tape 'r' !");
-	//if(readChar()=='r' || readChar()=='R'){algorithm();}
 	 choixRetour();var='v';
 	 afficherMenu();
     }
@@ -186,41 +184,51 @@ class LiberationOfTheSchool extends Program{
     ////   Choix Aleatoire de la question   ///
     int randomizer(){return (int)(random()*10)+1;}
     
-    ////   Ne pas répéter la même question ////
-    int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle,String matiere){	
+    ////   Ne pas répéter la même question //
+    int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle,String matiere){
+	int x=0;
+	/*switch(matiere){
+	case "francais":
+	    x=10;
+	    break;
+	case "math":
+		x=20;
+		break;
+	case "histoire":
+		x=30;
+		break;
+	case "geographie":  --> ca bugg avec ca (index out a bound ...) pcq on a pas un tableau de question faite mais un tableau par matière, il ne depasse donc pas 10 emplacements, en enlevant le switch case ca marche ^^
+	    x=40;
+	    break;
+	case "anglais":
+	    x=50;
+	    break;
+	case "art":
+	    x=60;
+	    break;
+	case "sciences":
+        x=70;
+        break;
+	case "final":
+	    x=80;
+	    break;
+
+	}*/
 	for(int idx=0;idx<length(questionsFaites);idx++){
-	    if(equals(matiere,"math")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer(),"math");}return questionActuelle;}
-	    else if(equals(matiere,"francais")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"francais");}return questionActuelle;}
-		else if(equals(matiere,"histoire")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"histoire");}return questionActuelle;}
-		else if(equals(matiere,"geographie")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"geographie");}return questionActuelle;}
-		else if(equals(matiere,"anglais")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"anglais");}return questionActuelle;}
-		else if(equals(matiere,"art")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"art");}return questionActuelle;}
-		else if(equals(matiere,"sciences")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"sciences");}return questionActuelle;}
-		else if(equals(matiere,"final")){
-		if(questionsFaites[idx]==questionActuelle){return checkQuestionPasFaite(questionsFaites,randomizer()+10,"final");}return questionActuelle;}
-	}
-	return 0;}
+	    if(questionsFaites[idx]==questionActuelle+x){return checkQuestionPasFaite(questionsFaites,randomizer(),matiere);}}
+	return questionActuelle+x;
+    }
 
-
-	
-		
-		   
-		
+       	
 
     ///////////affichage du combat //////////////
     void afficherCombat(Loustique loustique,Joueur eleve,CSVFile fichiercsv,int[]questionFaites,int i){clearScreen();
 	
 	while(loustique.hp>0 && eleve.vie>0){
 	//affichage loustique
-	cursor(5,75);println(loustique.nom);
-	cursor(10,60);print("Points de vie restants de "+loustique.nom+" : "+loustique.hp+"/100");
+	    text("green");cursor(5,75);println(loustique.nom);reset();
+	    String hpLous="";cursor(10,60);print("Points de vie restants de "+loustique.nom+" : "+loustique.hp+"/100");
+	    text("red");cursor(11,58);for(int j=0;j<loustique.hp;j=j+2){hpLous=hpLous+"♥";}print(hpLous);reset();
 	
 	//question
 	int q=randomizer();
@@ -251,7 +259,9 @@ class LiberationOfTheSchool extends Program{
 	cursor(36,115);print("4- "+getCell(fichiercsv,q,5));
 	
 	//reponse du joueur
-	cursor(32,75);print(""+eleve.nomDuJoueur+" HP : "+eleve.vie+"/3");
+       cursor(32,75);print(""+eleve.nomDuJoueur+" HP : "+eleve.vie+"/3");
+	String hpEleve="";
+	text("red");cursor(33,80);for(int j=0;j<eleve.vie;j++){hpEleve=hpEleve+"♥";}print(hpEleve);reset();
 	cursor(38,65);println("Quel réponse choisissez vous ?");cursor(40,80);
 	
 	//saisie réponse + verification de la réponse et conséquence
@@ -280,12 +290,21 @@ class LiberationOfTheSchool extends Program{
 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ////////////////////////////////////////////////////// Programmes annexes / dialogues /////////////////////////////////////////////////////////////
-    char repJoueur(){
+     char repJoueur(){
 	var='r';
 	rep='v';
 	enableKeyTypedInConsole(true);
 	touche=false;
-	while(!touche){delay(1);}
+	while(!touche){
+	    String chrono="OOOOOOOOOO";
+	    int c=10;
+	    while(!touche){
+		text("blue");
+		cursor(20,75);clearLine();print(chrono);delay(1000);c--;chrono=substring(chrono,0,c);cursor(40,80);
+		if(c==0){touche=true;}
+		reset();
+	    }	    
+	}
 	enableKeyTypedInConsole(false);
         return rep;}
     
@@ -429,4 +448,3 @@ void algorithm(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-
