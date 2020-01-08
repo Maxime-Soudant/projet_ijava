@@ -47,85 +47,101 @@ class LiberationOfTheSchool extends Program{
    
 //////////////////////////////////////////////////ALGORITHME PRINCIPALE///////////////////////////////////////////////////////////////////////////
     
-    void jouer(){
+   void jouer(){
 	enableKeyTypedInConsole(false);touche=true;affichageChargement();
-	Sound theme=newSound("theme.mp3");play(theme,true);// ♪
-        Sound themeC=newSound("themeCombat.mp3");//  ♪
-	Sound themeRencontreLoustique=newSound("themeRencontreLoustique.mp3");// ♪
-	CSVFile fichiercsv=loadCSV("questions_reponses_stock.csv");
+	Sound theme=newSound("../ressources/theme.mp3");play(theme,true);// ♪
+        Sound themeC=newSound("../ressources/themeCombat.mp3");//  ♪
+	Sound themeRencontreLoustique=newSound("../ressources/themeRencontreLoustique.mp3");// ♪
+	CSVFile fichiercsv=loadCSV("../ressources/questions_reponses_stock.csv");
 	Joueur eleve = new Joueur(); eleve.vie=3;
 	choixSexe();
 	cursor(20,65); println("Quel est le nom de ton école ?");
 	cursor(21,80); eleve.ecole=readString(); clearScreen();
 
 	//dialogue 1//
-	dialogue1(eleve);
+	//dialogue1(eleve);
 	stop(theme);
 	delay(500);
 	play(themeRencontreLoustique,true);//  ♪
-	dialogue1rencontre(eleve);
+	//dialogue1rencontre(eleve);
 	stop(themeRencontreLoustique);// ♪
 	affichageChargement();
 	
 	
-	//début de combat avec le loustique de Math//
+	/*//début de combat avec le loustique de Math//
         play(themeC,true);//   ♪
 	int[]questionFaitesMath=new int[10];int i=0;
 	afficherCombat(creerLoustique("Pythongore","math"),eleve,fichiercsv,questionFaitesMath,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//fin de combat//
+	//fin de combat//*/
 
 	//dialogue 2//
+    affichageChargement();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue2rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
 	//dialogue2(eleve);
 	
-	//début du combat avec le loustique de Français//
+	/*//début du combat avec le loustique de Français//
 	play(themeC,true);//   ♪
 	int[]questionFaitesFrancais=new int[10];i=0;
 	afficherCombat(creerLoustique("Rimbaudelaire","francais"),eleve,fichiercsv,questionFaitesFrancais,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
 	//dialogue 3//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue3rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
 	//dialogue3(eleve);
 
-	//début du combat avec le loustique d'Histoire//
+	/*//début du combat avec le loustique d'Histoire//
 	play(themeC,true);//   ♪
 	int[]questionFaitesHistoire=new int[10];i=0;
 	afficherCombat(creerLoustique("Napoléonard Bonaparte","histoire"),eleve,fichiercsv,questionFaitesHistoire,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
 	//dialogue 4//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue4rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
 	//dialogue4(eleve);
 
-	//début du combat avec le loustique de Géographie//
+	/*//début du combat avec le loustique de Géographie//
 	play(themeC,true);//   ♪
 	int[]questionFaitesGeographie=new int[10];i=0;
 	afficherCombat(creerLoustique("Cristophe Colombe","geographie"),eleve,fichiercsv,questionFaitesGeographie,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
 	//dialogue 5//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue5rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
 	//dialogue5(eleve);
 
-	//début du combat avec le loustique de Français//
+	/*//début du combat avec le loustique d'anglais//
 	play(themeC,true);//   ♪
 	int[]questionFaitesAnglais=new int[10];i=0;
 	afficherCombat(creerLoustique("Miss California","anglais"),eleve,fichiercsv,questionFaitesAnglais,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
 	//dialogue 6//
 	affichageChargement();
@@ -133,12 +149,12 @@ class LiberationOfTheSchool extends Program{
 	continuer();
 	//dialogue6(eleve);
 
-	//début du combat avec le loustique de Français//
+	/*//début du combat avec le loustique de Français//
 	play(themeC,true);//   ♪
 	int[]questionFaitesArt=new int[10];i=0;
 	afficherCombat(creerLoustique("Eduardo DelArte","art"),eleve,fichiercsv,questionFaitesArt,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
 	//dialogue 7//
 	affichageChargement();
@@ -146,12 +162,12 @@ class LiberationOfTheSchool extends Program{
 	continuer();
 	//dialogue7(eleve);
 
-	//début du combat avec le loustique de Français//
+	/*//début du combat avec le loustique de Français//
 	play(themeC,true);//   ♪
 	int[]questionFaitesSciences=new int[10];i=0;
 	afficherCombat(creerLoustique("Thomas Tesla","sciences"),eleve,fichiercsv,questionFaitesSciences,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
 	//dialogue 8//
 	affichageChargement();
@@ -159,12 +175,12 @@ class LiberationOfTheSchool extends Program{
 	continuer();
 	//dialogue8(eleve);
 
-	//début du combat avec le loustique Final//
+	/*//début du combat avec le loustique Final//
 	play(themeC,true);//   ♪
 	int[]questionFaitesFinal=new int[10];i=0;
 	afficherCombat(creerLoustique("Chef des Loustiques","final"),eleve,fichiercsv,questionFaitesFinal,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//
+	//Fin de combat//*/
 
     //dialogue final//
 	affichageChargement();
@@ -186,27 +202,6 @@ class LiberationOfTheSchool extends Program{
     
     ////   Ne pas répéter la même question //
     int checkQuestionPasFaite(int[]questionsFaites,int questionActuelle,String matiere){
-
-    	/*int x=0;
-	switch(matiere){
-	case "francais":
-	    x=10;
-	case "geographie":
-	    x=20;
-	case "anglais":						-------->Ne fonctionne pas
-	    x=30;
-	case "art":
-	    x=40;
-	case "sciences":
-            x=50;
-	case "final":
-	    x=60;
-
-	}
-	for(int idx=0;idx<length(questionsFaites);idx++){
-	    if(questionsFaites[idx]==questionActuelle+x){return checkQuestionPasFaite(questionsFaites,randomizer(),matiere);}}
-	return questionActuelle+x;
-    }*/
 	
 	int q=randomizer();
 	if (equals(matiere, "francais")){
@@ -277,7 +272,7 @@ class LiberationOfTheSchool extends Program{
 	//saisie réponse + verification de la réponse et conséquence
 	if(verifierBonneReponse(repJoueur(),fichiercsv,q)){
 	 //bonne réponse
-	    cursor(20,60);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");delay(1100);
+	    cursor(20,60);print("Bravo,"+loustique.nom+" a perdu 25 points de vie !");delay(2000);
 	    loustique.hp=(loustique.hp)-25;
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);
 	    
@@ -314,7 +309,10 @@ class LiberationOfTheSchool extends Program{
 	    int c=10;
 	    while(!touche){
 		text("blue");
-		cursor(20,75);clearLine();print(chrono);delay(1000);c--;chrono=substring(chrono,0,c);cursor(40,80);
+		cursor(20,75);clearLine();print(chrono);delay(3000);
+		c--;
+		chrono=substring(chrono,0,c);
+		cursor(40,80);
 		if(c==0){touche=true;}
 		reset();
 	    }	    
@@ -405,7 +403,7 @@ void algorithm(){
 	print("///");delay(60);print("///");delay(60);print("///");delay(60);print("///");delay(60);delay(500);clearScreen();}
 
     
-//////////////////////////////////////////////Dialogue du début////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////Dialogue////////////////////////////////////////////////////////////////////////////////////
     
     void dialogue1(Joueur eleve){
 	String test="";
@@ -450,15 +448,126 @@ void algorithm(){
 	print(".");delay(1000);print(".");delay(1000);print(".");delay(1200);clearLine();}
 
     void dialogue1rencontre(Joueur eleve){
-	cursor(25,5);print("Inconnu");cursor(27,7);print("Stop, qui va là ?");continuer();
-	cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
-	cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
-	cursor(24,5);print("Inconnu");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");continuer();
-	cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
-	cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
-	cursor(24,5);print("Pythongore");cursor(28,5);print("Pythongore");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");
-	cursor(30,7);print("Je suis Pythongore, le cadet des Loustiques, je suis spécialiste des mathématiques et je vais vous faire regretter d'être venus jusqu'ici!");continuer();}
+		cursor(25,5);print("Inconnu");cursor(27,7);print("Stop, qui va là ?");continuer();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
+		cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
+		cursor(24,5);print("Inconnu");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");continuer();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");
+		cursor(22,7);print("(Psst "+eleve.nomDuJoueur+",l'école est censée être deserte, cet homme doit être un de ces loustiques !)");
+		cursor(24,5);print("Pythongore");cursor(28,5);print("Pythongore");cursor(26,7);print("Qui êtes-vous, vous n'êtes pas la bienvenue ici !");
+		cursor(30,7);print("Je suis Pythongore, le cadet des Loustiques, je suis spécialiste des mathématiques et je vais vous faire regretter d'être venus jusqu'ici!");continuer();}
     
+	void dialogue2rencontre(Joueur eleve){
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Nous l’avons battu ? Enfin en tout cas il ne bouge plus donc je suppose qu’il est hors d’état de nuire ! ");
+		cursor(23,7);print("J’espère que les Loustiques suivants seront moins puissants, quel combat ! Tu t’es super bien débrouillé "+eleve.nomDuJoueur+" ! Bravo !");
+		cursor(25,7);print("Bon, étant donné que nous sommes directement tombés sur ce pythongore, laisses moi quelques secondes pour repérer où nous nous trouvons …");
+		continuer();
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Nous sommes donc dans la cour de l’école , il nous faut trouver un moyen d’entrer … Là bas, la fenêtre semble ouverte ! Je vais te faire la courte échelle.");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("Gabriel vous fait la courte échelle pour entrer dans l'école");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Ho Hisse la saucisse ! Bon, visiblement nous sommes arrivés dans la salle de français ");
+		continuer();
+		clearScreen();
+		cursor(24,25);print(" La porte grince en s’ouvrant");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("Inconnu :");cursor(22,7);print("Qui va là ? J’ai entendu du bruit, montrez vous !");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Regarde "+eleve.nomDuJoueur+", voilà un nouveau loustique , nous devons le battre ! Nous sommes là pour sauver cette école, et toi qui es tu ?");
+		clearScreen();
+		cursor(20,5);print("Rimbaudelaire :");cursor(22,7);print("Qui va là ? J’ai entendu du bruit, montrez vous !");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Regarde "+eleve.nomDuJoueur+", voilà un nouveau loustique , nous devons le battre ! Nous sommes là pour sauver cette école, et toi qui es tu ?");
+		cursor(28,5);print("Rimbaudelaire");cursor(30,7);print("Je suis Rimbaudelaire, spécialiste du français. Vous pensez vraiment pouvoir libérer cette école ?");
+		cursor(31,7);print("Cela m’étonnerait beaucoup, vous feriez mieux de partir ! Mais j’ai envie de m’amuser un peu avec votre ignorance, alors en garde !");
+		continuer();
+	}
+
+	void dialogue3rencontre(Joueur eleve){
+		cursor(20,5);print("Rimbaudelaire :");cursor(22,7);print("Je… Je n’arrive pas à y croire, vous m’avez vaincu … c’est impossible ! je souffre ! Je me sens partir …");
+		cursor(23,7);print("De toute façon, mes frères ne vous laisserons pas passer ! Ils sont bien plus fort que moi !");
+		cursor(25,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(27,7);print("Bravo "+eleve.nomDuJoueur+", nous avons vaincu le deuxième loustique ! D’ailleurs je ne savais pas que les loustiques étaient frères !");
+		cursor(27,7);print(" M’enfin peu importe nous devons avancer pour libérer ton école de ces malfrats !");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("Vous sortez de la salle avec Gabriel");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Bon maintenant que nous sommes dans le couloir de l’école , nous devons trouver par où aller… Par chance à droite c’est un cul de sac nous allons donc à gauche !");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("Vous prenez la route vers la gauche de le couloir de l’école");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Chuttt ! Ne fait pas de bruit ! J’ai entendu du bruit sur la gauche !");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("Vous regardez discrètement dans la salle sur votre gauche");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Voilà l’accueil , il semble y avoir un loustique à l’intérieur , essayons de passer discrètement");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("Le loustique se retourne brusquement");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("Napoléonard :");cursor(22,7);print("Vue ! Arrêtez vous là ! Je sais qui vous êtes , mon frère LOUSTIQUE DE FRANÇAIS m’a prévenu de votre intrusion !");
+		cursor(23,7);print("Je suis Napoléonard et je vais vous réduire en bouillie pour venger mon frère !");
+		cursor(25,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(27,7);print("En garde "+eleve.nomDuJoueur+" il va falloir te défendre de nouveau !");
+		continuer();
+	}
+
+	void dialogue4rencontre(Joueur eleve){
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡  :");cursor(22,7);print("Quel combat ! Encore une fois, bravo "+eleve.nomDuJoueur+", je n’aurais jamais pu avancer comme cela si tu n’étais pas là… Je serais déjà mort depuis longtemps !");
+		cursor(24,7);print("Mais restons vigilant car j’ai l’impression que les combats sont de plus en plus compliqués … Avançons il n’y a pas de temps à perdre , chaque seconde qui passe risque d’être critique");
+		cursor(25,7);print("pour tes camarades et tes professeurs !");
+		cursor(27,7);print("Au fond du couloir se trouve le gymnase, tout le monde est peut-être enfermé là bas, allons-y !");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("Vous entrez dans le gymnase");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡  :");cursor(22,7);print("Regardes là-bas sur la poutre il semble y avoir un loustique ! EH TOI Là-BAS , DIS-NOUS Où SONT NOS AMIS !");
+		cursor(24,5);print("Cristophe Colombe :");cursor(26,7);print("Qui ose m’interrompre le grand Cristophe Colombe pendant qu’il s’amuse ?! Hm mais je vous ai déjà vu vous ! Vos amis ne sont pas ici");
+		cursor(27,7);print("mais vous n’irez pas plus loin car je vais vous écraser !");
+		cursor(29,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡  :");cursor(31,7);print(eleve.nomDuJoueur+" c'est à toi !");
+		continuer();
+	}
+
+	void dialogue5rencontre(Joueur eleve){
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Pfiou encore un de moins, comment ce gros plein de soupe a-t’il pu croire qu’il nous écraserait ?");
+		cursor(24,7);print(" M’enfin ne prenons pas la grosse tête , nous devons avancer et rester vigilant ! Bon, où nos amis peuvent-ils bien être emprisonnés ?");
+		cursor (26,7);print("Je sais ! Allons voir à la cantine ! C’est au bout du couloir à droite en sortant du gymnase");
+		continuer();
+		clearScreen();
+		cursor(24,25);print("vous sortez du gymnase et courez jusqu’à la cantine");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("Miss California :");cursor(22,7);print("STOP ARRÊTEZ VOUS ! OU ALLEZ VOUS COMME ÇA ? Je suis Miss California et je vais vous arrêter ! ");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Mais d’où elle sort celle là, et puis qui est ce ? Oh! Ce doit être encore un des loustiques,enfin une des loustiques. Si mes calculs sont bons il doit en rester 3…");
+		cursor(27,7);print("Aller en piste "+eleve.nomDuJoueur+" ! Après celui là, nous en aurons bientôt fini avec eux !");
+		continuer();
+	}
+
+	void dialogue6rencontre(Joueur eleve){
+
+	}
+
+	void dialogue7rencontre(Joueur eleve){
+
+	}
+
+	void dialogue8rencontre(Joueur eleve){
+
+	}
+
+	void dialogue9rencontre(Joueur eleve){
+
+	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 }
