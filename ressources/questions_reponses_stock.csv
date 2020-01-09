@@ -7,7 +7,7 @@ math,Un gâteau est coupé en 8 parts il y a 2 enfants combien de parts auront c
 math,Combien de billets de 5e faut-il pour faire 100e ?,25,20,5,15,2
 math,Un mètre est égale à :,10cm,100cm,1000cm,0.1cm,2
 math,Un angle droit est : ,une ligne droite,l’inverse d’un angle gauche,une ligne courbée,l’angle d’une équerre,4
-math,Une journée dure :,3600 secondes,60 000 secondes,24 000 secondes,1280 secondes,1
+math,Une journée dure :,3600 secondes,86 400 secondes,24 000 secondes,1280 secondes,2
 math,Si 25% d’une classe de 8 élèves ont les yeux bleus combien de personnes ont les yeux bleus ?,4,3,2,1,3
 francais,Choisis l'adjectif qui convient : des billes,blanche,noires,noir,blenches,2
 francais,Quel est l'intrus ?,manger,lancer,boire,sévère,4
@@ -26,7 +26,7 @@ histoire,En quelle année le mur de Berlin est-il détruit ?,1989,1945,1991,Il e
 histoire,Qu'entraîne la convertion de Clovis ?,Plus de revenus,Plus de territoire,La conversion de son peuple,Ne plus avoir de couronne,3
 histoire,Où est sacré Charlemagne ?,Aix la Chapelle,Paris,Rome,Athène,3
 histoire,De quelle famille fait parti Clovis ?,Les Bourbons,Les mérovingiens,Les Capétiens,Les Carolingiens,2
-histoire,Qu'est ce qui sert de liminite chrnologique à la fin de la préhistoire ?,La découverte des Amériques,L'invention de l'écriture,L'invention de l'agriculture,La domestication du feu,2
+histoire,Qu'est ce qui sert de limite chrnologique à la fin de la préhistoire ?,La découverte des Amériques,L'invention de l'écriture,L'invention de l'agriculture,La domestication du feu,2
 histoire,Quand à été inventée l'agriculture ?,Environ 8 000 avant Jésus-Christ,En l'an 1,Environ 350 avant Jésus-Christ,En 750 après Jésus-Christ,1
 histoire,Dans quel pays trouve-t-on les hiéroglyphes ?,Italie,Egypte,Grèce,France,2
 geographie,Dans quel pays se trouve la ville de Lyon ?,Italie,Belgique,Allemagne,France,4

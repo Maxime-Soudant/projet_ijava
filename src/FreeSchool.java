@@ -1,11 +1,11 @@
 import extensions.*;
-class LiberationOfTheSchool extends Program{
+class FreeSchool extends Program{
     boolean touche=false;char var='v';String sexe=" ";char rep='v';char var2=' ';
 //////////////////////////////////////////////////////////Menu/////////////////////////////////////////////////////////////////////////////////////
     void afficherMenu(){
 	hide();
 	clearScreen();
-	cursor(10,70);print("Liberation Of The School");
+	cursor(10,70);print("Free School");
 	cursor(20,10);print("1- Jouer");
 	cursor(22,10);print("2- Projet");
 	cursor(24,10);print("3- Credits");
@@ -15,12 +15,18 @@ class LiberationOfTheSchool extends Program{
 	switch(var2){
 	case 'j':
 	    var='v';jouer();
+	    break;
 	case 'p':
 	    var='v';projet();
+	    break;
 	case 'c':
 	    var='v';credits();
+	    break;
 	case 'q':
 	    clearScreen();cursor(25,75);println("Au revoir ! :)");
+	    delay(5000);
+	    reset();
+	    break;
 	}
     }
     
@@ -50,8 +56,9 @@ class LiberationOfTheSchool extends Program{
    void jouer(){
 	enableKeyTypedInConsole(false);touche=true;affichageChargement();
 	Sound theme=newSound("../ressources/theme.mp3");play(theme,true);// ♪
-        Sound themeC=newSound("../ressources/themeCombat.mp3");//  ♪
+    Sound themeC=newSound("../ressources/themeCombat.mp3");//  ♪
 	Sound themeRencontreLoustique=newSound("../ressources/themeRencontreLoustique.mp3");// ♪
+	Sound themeFinal=newSound("../ressources/themeFinal.mp3");// ♪
 	CSVFile fichiercsv=loadCSV("../ressources/questions_reponses_stock.csv");
 	Joueur eleve = new Joueur(); eleve.vie=3;
 	choixSexe();
@@ -59,21 +66,22 @@ class LiberationOfTheSchool extends Program{
 	cursor(21,80); eleve.ecole=readString(); clearScreen();
 
 	//dialogue 1//
-	//dialogue1(eleve);
+	clearScreen();
+	dialogue1(eleve);
 	stop(theme);
 	delay(500);
 	play(themeRencontreLoustique,true);//  ♪
-	//dialogue1rencontre(eleve);
+	dialogue1rencontre(eleve);
 	stop(themeRencontreLoustique);// ♪
 	affichageChargement();
 	
 	
-	/*//début de combat avec le loustique de Math//
+	//début de combat avec le loustique de Math//
         play(themeC,true);//   ♪
 	int[]questionFaitesMath=new int[10];int i=0;
 	afficherCombat(creerLoustique("Pythongore","math"),eleve,fichiercsv,questionFaitesMath,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//fin de combat//*/
+	//fin de combat//
 
 	//dialogue 2//
     affichageChargement();
@@ -85,12 +93,12 @@ class LiberationOfTheSchool extends Program{
 	affichageChargement();
 	//dialogue2(eleve);
 	
-	/*//début du combat avec le loustique de Français//
+	//début du combat avec le loustique de Français//
 	play(themeC,true);//   ♪
 	int[]questionFaitesFrancais=new int[10];i=0;
 	afficherCombat(creerLoustique("Rimbaudelaire","francais"),eleve,fichiercsv,questionFaitesFrancais,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
 	//dialogue 3//
 	affichageChargement();
@@ -102,12 +110,12 @@ class LiberationOfTheSchool extends Program{
 	affichageChargement();
 	//dialogue3(eleve);
 
-	/*//début du combat avec le loustique d'Histoire//
+	//début du combat avec le loustique d'Histoire//
 	play(themeC,true);//   ♪
 	int[]questionFaitesHistoire=new int[10];i=0;
 	afficherCombat(creerLoustique("Napoléonard Bonaparte","histoire"),eleve,fichiercsv,questionFaitesHistoire,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
 	//dialogue 4//
 	affichageChargement();
@@ -119,12 +127,12 @@ class LiberationOfTheSchool extends Program{
 	affichageChargement();
 	//dialogue4(eleve);
 
-	/*//début du combat avec le loustique de Géographie//
+	//début du combat avec le loustique de Géographie//
 	play(themeC,true);//   ♪
 	int[]questionFaitesGeographie=new int[10];i=0;
 	afficherCombat(creerLoustique("Cristophe Colombe","geographie"),eleve,fichiercsv,questionFaitesGeographie,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
 	//dialogue 5//
 	affichageChargement();
@@ -136,56 +144,73 @@ class LiberationOfTheSchool extends Program{
 	affichageChargement();
 	//dialogue5(eleve);
 
-	/*//début du combat avec le loustique d'anglais//
+	//début du combat avec le loustique d'anglais//
 	play(themeC,true);//   ♪
 	int[]questionFaitesAnglais=new int[10];i=0;
 	afficherCombat(creerLoustique("Miss California","anglais"),eleve,fichiercsv,questionFaitesAnglais,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
 	//dialogue 6//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue6rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
 	//dialogue6(eleve);
 
-	/*//début du combat avec le loustique de Français//
+	//début du combat avec le loustique d'art//
 	play(themeC,true);//   ♪
 	int[]questionFaitesArt=new int[10];i=0;
 	afficherCombat(creerLoustique("Eduardo DelArte","art"),eleve,fichiercsv,questionFaitesArt,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
 	//dialogue 7//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue7rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
 	//dialogue7(eleve);
 
-	/*//début du combat avec le loustique de Français//
+	//début du combat avec le loustique des sciences//
 	play(themeC,true);//   ♪
 	int[]questionFaitesSciences=new int[10];i=0;
 	afficherCombat(creerLoustique("Thomas Tesla","sciences"),eleve,fichiercsv,questionFaitesSciences,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
 	//dialogue 8//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeRencontreLoustique,true);//  ♪
+	dialogue8rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
 	//dialogue8(eleve);
 
-	/*//début du combat avec le loustique Final//
+	//début du combat avec le loustique Final//
 	play(themeC,true);//   ♪
 	int[]questionFaitesFinal=new int[10];i=0;
 	afficherCombat(creerLoustique("Chef des Loustiques","final"),eleve,fichiercsv,questionFaitesFinal,i);
         stop(themeC);eleve.vie=3;//  ♪
-	//Fin de combat//*/
+	//Fin de combat//
 
     //dialogue final//
 	affichageChargement();
-	play(theme,true);// ♪
-	continuer();
+	stop(theme);
+	delay(500);
+	play(themeFinal,true);//  ♪
+	dialogue9rencontre(eleve);
+	stop(themeRencontreLoustique);// ♪
+	affichageChargement();
+	afficherMenu();
 	//fin du jeu//
 	}
 
@@ -282,9 +307,9 @@ class LiberationOfTheSchool extends Program{
 	    afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}
 	}
 	//cas de victoire ou défaite//
-	if(victoireOuDefaite(loustique)){clearScreen();cursor(20,50);print("Vous avez vaincu "+loustique.nom+" félicitations !");continuer();}
-	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance en appuyant sur 'c'...");
-	continuer();
+	if(victoireOuDefaite(loustique)){clearScreen();cursor(20,50);print("Vous avez vaincu "+loustique.nom+" félicitations !");delay(5000);}
+	else{clearScreen();cursor(25,50);print("Malheureusement vous avez échoué... retentez votre chance ...");
+	delay(5000);
 	affichageChargement();
 	eleve.vie=3;
 	afficherCombat(loustique,eleve,fichiercsv,questionFaites,i);}}
@@ -408,7 +433,7 @@ void algorithm(){
     void dialogue1(Joueur eleve){
 	String test="";
 	cursor(20,5);print("𝘿𝙞𝙚𝙪 :");
-	cursor(22,7);print("Salutations jeune " + sexe + ", et bienvenue dans Liberation Of The School, le jeu d’aventure dans lequel tu vas devenir un aventurier hors pair en parcourant ta ville !\n      Tu vas pouvoir rencontrer tes camarades qui auront des missions à te proposer, il faudra les remplir pour les aider.\n      Ces missions peuvent sembler très simples au début mais se corseront rapidement, tu verras. Avant de commencer, peux-tu me dire comment tu t’appelles ?");
+	cursor(22,7);print("Salutations jeune " + sexe + ", et bienvenue dans Free School, le jeu d’aventure dans lequel tu vas devenir un aventurier hors pair en parcourant ta ville !\n      Tu vas pouvoir rencontrer tes camarades qui auront des missions à te proposer, il faudra les remplir pour les aider.\n      Ces missions peuvent sembler très simples au début mais se corseront rapidement, tu verras. Avant de commencer, peux-tu me dire comment tu t’appelles ?");
 	cursor(26,80);clearLine();eleve.nomDuJoueur=readString();clearScreen();
 	cursor(20,5);print("𝘿𝙞𝙚𝙪 :");
 	cursor(22,3);print("Très bien "+eleve.nomDuJoueur+", nous allons pouvoir commencer. Avant toutes choses, je vais te poser une question afin de voir si tu es apte à aider tes camarades, tu es prêt ?");continuer();
@@ -489,7 +514,7 @@ void algorithm(){
 		cursor(20,5);print("Rimbaudelaire :");cursor(22,7);print("Je… Je n’arrive pas à y croire, vous m’avez vaincu … c’est impossible ! je souffre ! Je me sens partir …");
 		cursor(23,7);print("De toute façon, mes frères ne vous laisserons pas passer ! Ils sont bien plus fort que moi !");
 		cursor(25,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(27,7);print("Bravo "+eleve.nomDuJoueur+", nous avons vaincu le deuxième loustique ! D’ailleurs je ne savais pas que les loustiques étaient frères !");
-		cursor(27,7);print(" M’enfin peu importe nous devons avancer pour libérer ton école de ces malfrats !");
+		cursor(27,7);print("M’enfin peu importe nous devons avancer pour libérer ton école de ces malfrats !");
 		continuer();
 		clearScreen();
 		cursor(24,25);print("Vous sortez de la salle avec Gabriel");
@@ -552,19 +577,125 @@ void algorithm(){
 	}
 
 	void dialogue6rencontre(Joueur eleve){
-
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("C'était pas du gâteau celui là ! Nous pouvons enfin entrer dans la cantine maintenant que ce Nom du loustique ne nous embête plus … d’ailleurs j’ai un petit creux moi …");
+		cursor(24,7);print("Je vais voir si je peux prendre un petit quelque chose à manger !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Vous entrez dans la cuisine");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Il n’y a personne ici … Mais où peuvent-ils bien être ? Je ne sais pas réfléchir le ventre vide … Je vais prendre quelque chose dans le frigo et nous repartirons après …");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Gabriel ouvre le frigo");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("Inconnu :");cursor(22,7);print("BBBOOOOOUUUUUHHHHHHHH !!!!!!");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("HHHHHHHAAAAAAAA !!!!! Mais t’es qui toi encore et puis tu m’as fait peur !");
+		continuer();
+		clearScreen();
+		cursor(20,5);print("Eduardo DelArte");cursor(22,7);print("Quelle question ? Je suis un loustique bien évidement , je suis plus précisément Eduardo DelArte ! Comme tu peux le voir , tes amis ne sont pas dans la cantine , ni");
+		cursor(24,7);print("dans ce frigo ! J’aurais pu vous laisser la vie sauve mais puisque vous m’avez dérangé pendant ma sieste , je vais vous anéantir !!");
+		cursor(26,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(28,7);print("Roh mais quel lourdeau celui là … "+eleve.nomDuJoueur+" tu sais ce qu’il te reste à faire !");
+		continuer();
 	}
 
 	void dialogue7rencontre(Joueur eleve){
-
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Et plus que deux ! On avance bien "+eleve.nomDuJoueur+" mais il faudrait vraiment trouver tout le monde maintenant il commence à se faire tard et Dieu va commencer à");
+		cursor(23,7);print("s’inquiéter, j’aimerais beaucoup qu’il n’aie pas à se déplacer comme ça il pourra me confier des missions plus importantes à l’avenir ...");
+		cursor(25,7);print("Réfléchissons , où peuvent-ils bien être ? Nous avons parcouru toutes les salles du bas, il ne reste donc plus que l’étage cependant … Il n’y a que le bureau du directeur là haut.");
+		cursor(26,7);print("Se pourrait-il qu’ils y aient été enfermé ? Nous devons aller voir "+eleve.nomDuJoueur+", le temps presse !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Vous courrez vers les escaliers");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Regardes devant la porte du bureau du directeur, il y a un loustique qui monte la garde , nos amis doivent sûrement être à l’intérieur !");
+		cursor(24,7);print("EH TOI ! REL CHE NOS AMIS , NOUS SAVONS QUE TU LES CACHES À L'INTÉRIEUR !");
+		cursor(26,5);print("Thomas Tesla");cursor(28,7);print("Tout d’abord bonjour ! Je suis Thomas Tesla ! Je suis le plus puissant de mes frères , vous ne devriez pas me parler comme ça car je vais vous écraser et jamais");
+		cursor(30,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(32,7);print(eleve.nomDuJoueur+", c’est à toi , c’est la dernière ligne droite avant de libérer nos amis !");
+		continuer();
 	}
 
 	void dialogue8rencontre(Joueur eleve){
+		cursor(20,5);print("Thomas Tesla :");cursor(22,7);print("Comment avez vous pu me battre ? C’est impossible ! Déjà battre mes frères je ne comprends pas comment vous avez fait, mais moi ?");
+		cursor(23,7);print("Le plus puissant de tous les loustiques ! Papa ne va pas être content !");
+		cursor(25,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(27,7);print("Papa ? Mais de qui parle t-il ? Peu importe nous les avons tous vaincus ! Allons retrouver nos amis !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Vous ouvrez la porte");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("Maîtresse :");cursor(22,7);print(eleve.nomDuJoueur+" ! Tu nous as retrouvés ! Je commençais à perdre espoir , nous avons eu tellement peur avec tes camarades.");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Bonjour à tous, je ne voudrais pas vous couper dans vos retrouvailles mais je pense que l’on ferait mieux de partir rapidement.");
+		cursor(28,5);print("Maîtresse :");cursor(30,7);print("Vous avez raison, partons !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Vous courez tous ensemble vers la sortie de l’école ");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Attendez ! Il y a quelqu'un devant la porte ! On dirait un loustique … Mais nous les avons tous battus … Celui-ci semble beaucoup plus grand et plus âgé que les autres …");
+		cursor(24,7);print("Ce pourrait-il que ...? "+eleve.nomDuJoueur+" viens avec moi les autres restez en arrière , il doit s’agir du papa des loustique dont parlait le dernier loustique !");
+		cursor(25,7);print("C’est notre ultime combat "+eleve.nomDuJoueur+". Nous devons nous donner à fond ! C’est parti !");
+		cursor(27,7);print("Eh toi la bas ! Laisse nous passer !");
+		continuer();
+		clearScreen();
+		cursor(20,5);print("Chef des loustiques :");cursor(22,7);print("C’est vous qui avez gâché tout mon travail et anéanti mes fils, les loustiques ?");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Un peu mon neveu , nous voulions sauver nos amis !");
+		cursor(28,5);print("Chef des loustiques");cursor(30,7);print("Hmmm je vois ce sont vos amis , vous vous êtes bien battus et j’ai un marché à vous proposer !");
+		continuer();
+		clearScreen();
+		cursor(20,5);print("Chef des loustiques :");cursor(22,7);print("Si vous me battez vous aurez tous la vie sauve et nous ne viendrons plus jamais vous embêter . Par contre si je vous bats, vous resterez enfermés ici pour le restant de vos jours !");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print(eleve.nomDuJoueur+", tu dois absolument gagner , donne tout !");
+		continuer();
 
 	}
 
 	void dialogue9rencontre(Joueur eleve){
-
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Pfiou ce calvaire est enfin fini , le chef des loustique est hors d'état de nuit ! Bravo "+eleve.nomDuJoueur+" !! Maintenant, sortons de cette école !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Vous sortez tous ensemble de l’école");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("Maîtresse :");cursor(22,7);print(eleve.nomDuJoueur+", je voudrais vous remercier de nous avoir sauvés ! Grâce à toi et ton ami ange , nous avons tous la vie sauve !");
+		cursor(24,5);print("Camarades de classe");cursor(26,7);print("Merci "+eleve.nomDuJoueur+" !");
+		cursor(28,5);print("Maîtresse");cursor(30,7);print("Allez maintenant tout le monde rentre chez soi vos parents doivent être inquiets ! Encore merci à vous deux !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Tout le monde s’en va tandis que vous restez avec Gabriel");
+		delay(2500);
+		clearScreen();
+		cursor(20,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(22,7);print("Bien "+eleve.nomDuJoueur+", nous avons enfin réussi, tu devrais rentrer chez toi mais avant j’aimerais que nous passions voir Dieu pour lui annoncer la bonne nouvelle !");
+		cursor(24,7);print("Allez en route !");
+		continuer();
+		clearScreen();
+		affichageChargement();
+		cursor(20,5);print("Dieu :");cursor(22,7);print("Vous revoilà enfin ! Je commençais à me faire du soucis ! J’ai bien cru que j'allais devoir intervenir !");
+		cursor(24,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(26,7);print("Nous avons sauvé tout le monde ! Enfin "+eleve.nomDuJoueur+" à sauvé tout le monde, je n’ai fait que le guider.");
+		continuer();
+		clearScreen();
+		cursor(20,5);print("Dieu :");cursor(22,7);print("Très bien, je vois que j’ai bien fait de te demander ton aide “NOM DU JOUEUR”, je suis très fier de toi, enfin… Très fier de vous, car même si tu n’as fait qu'être le guide");
+		cursor(23,7);print("Gabriel, vous étiez une équipe et c’est ensemble que vous avez réussi !");
+		cursor(25,7);print("Bon "+eleve.nomDuJoueur+", tu te souviens du jeu dont je t’avais parlé avant que nous soyons interrompu par les loustiques ?");
+		continuer();
+		clearScreen();
+		cursor(20,5);print("Dieu :");cursor(22,7);print("Hé bien je te propose de rentrer chez toi et de te reposer après cette dure journée de combat ! Nous jouerons à ce jeu la prochaine fois, tu l’as bien mérité !");
+		cursor(24,7);print("Reviens nous voir quand tu le désires ! Je te souhaite une bonne journée et encore merci pour tes camarades !");
+		cursor(26,5);print("𝙂𝙖𝙗𝙧𝙞𝙚𝙡 :");cursor(28,7);print("A la prochaine "+eleve.nomDuJoueur+" ! Encore merci !");
+		continuer();
+		clearScreen();
+		cursor (24,25);print("Vous rentrez donc chez vous, pour vous blottir dans le canapé après cette dure journée");
+		delay(5000);
+		clearScreen();
+		cursor(24,25);print("Bravo "+eleve.nomDuJoueur+" ! Vous avez terminé le jeu avec succès !");
+		delay(5000);
+		clearScreen();
+		cursor(10,70);print("Crédits :");
+		cursor(14,40);print("Lucas DELESTREE");
+		cursor(15,40);print("Maxime SOUDANT");
+		delay(5000);
+		clearScreen();
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
