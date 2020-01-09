@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./compile.sh
+mate-terminal --maximize -e './run.sh'
