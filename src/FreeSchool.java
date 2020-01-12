@@ -50,6 +50,20 @@ class FreeSchool extends Program{
 		clearScreen();
 		cursor(10,50);
 		print("Présentation du projet :");
+		cursor(15,7);
+		print("Notre projet était de créer un jeu Ludo Pédagogique pour des enfants de primaire. Nous en avons trouvez une problématique qui était : comment permettre aux enfants de travailler");
+		cursor(16,7);
+		print("sans avoir l’impression de travailler ? et c’est pour cela que nous avons créé Free School.");
+		cursor (19,7);
+		print("Notre but était donc simplement de permettre aux enfants d’apprendre ou de réviser en s’amusant et en passant par toutes les matières. En effet, il est beaucoup plus compliqué");
+		cursor(20,7);
+		print("pour un enfant de faire ces devoirs que que de jouer à un jeu.");
+		cursor(23,7);
+		print("Avec Free Shcool, les enfants peuvent apprendre et survoler le programme de primaire tout en s’amusant au travers d’une histoire prenante dans laquelle ils doivent sauver leur école ");
+		cursor(24,7);
+		print("en combattant les méchants qui détiennent leur camarades en otages.");
+		cursor(27,7);
+		print("Plus d’informations sur les fonctionnalités du jeu dans le fichier README.md");
 		cursor(40,5);
 		print("Pour retourner au menu, tape 'r' !");
 		choixRetour();
@@ -610,7 +624,7 @@ class FreeSchool extends Program{
     }
 
 	
-    void _algorithm(){
+    void algorithm(){
 		clearScreen();
 		afficherMenu();
 	}
