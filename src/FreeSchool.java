@@ -87,7 +87,8 @@ class FreeSchool extends Program{
 		Sound themeRencontreLoustique=newSound("../ressources/themeRencontreLoustique.mp3");// ♪
 		Sound themeFinal=newSound("../ressources/themeFinal.mp3");// ♪
 		CSVFile fichiercsv=loadCSV("../ressources/questions_reponses_stock.csv");
-		Joueur eleve = new Joueur(); eleve.vie=3;
+		Joueur eleve = new Joueur(); 
+		eleve.vie=3;
 		choixSexe();
 		cursor(20,65); 
 		println("Quel est le nom de ton école ?");
@@ -259,7 +260,8 @@ class FreeSchool extends Program{
 		Loustique l = new Loustique();
 		l.nom=nomLoustique; 
 		l.matiere=matière; 
-		l.hp=100; return l;
+		l.hp=100; 
+		return l;
 	}
     
     ////   Choix Aleatoire de la question   ///
@@ -608,7 +610,7 @@ class FreeSchool extends Program{
     }
 
 	
-    void algorithm(){
+    void _algorithm(){
 		clearScreen();
 		afficherMenu();
 	}
@@ -1062,8 +1064,8 @@ class FreeSchool extends Program{
 	cursor(26,7);
 	print("Un peu mon neveu , nous voulions sauver nos amis !");
 	cursor(28,5);
-	print("Chef des loustiques");c
-	ursor(30,7);
+	print("Chef des loustiques");
+	cursor(30,7);
 	print("Hmmm je vois ce sont vos amis , vous vous êtes bien battus et j’ai un marché à vous proposer !");
 	continuer();
 	clearScreen();
@@ -1166,5 +1168,80 @@ class FreeSchool extends Program{
 	delay(5000);
 	clearScreen();
     }
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////TEST/////////////////////////////////////////////////////////////////////////
+
+    void testCreerLoustique (){
+    	String test="faux";
+    	Loustique loustique = creerLoustique ("loustique", "Test");
+    	assertEquals (loustique.nom, "loustique");
+    	assertEquals (loustique.matiere, "Test");
+    	
+    	if(loustique.hp==100){
+    		test="vrai";
+    	}
+
+    	assertEquals(test, "vrai");
+    }
+
+    void testEleve(){
+    	String test1="faux";
+    	String test2="faux";
+
+    	Joueur eleve = new Joueur();
+    	eleve.nomDuJoueur = "Test";
+    	eleve.sexe = 'G';
+    	eleve.ecole = "IUT A";
+    	eleve.vie = 3;
+
+    	if(eleve.sexe=='G'){
+    		test1="vrai";
+    	}
+
+    	if(eleve.vie == 3){
+    		test2="vrai";
+    	}
+
+    	assertEquals (eleve.nomDuJoueur, "Test");
+    	assertEquals (test1, "vrai");
+    	assertEquals(eleve.ecole, "IUT A");
+    	assertEquals(test2, "vrai");
+    }
+
+    void testRandomizer(){
+    	int rand = 0;
+    	String test="faux";
+
+    	rand = randomizer();
+
+    	if(rand>=1 && rand <= 11){
+    		test="vrai";
+    	}
+
+    	assertEquals(test, "vrai");
+    }
+
+    void testVictoireOuDefaite(){
+    	String test="";
+    	Loustique loustique = creerLoustique("lousitque", "Test");
+
+    	if (victoireOuDefaite(loustique)){
+    		test="victoire";
+    	}else {
+    		test="defaite";
+    	}
+
+    	assertEquals(test, "defaite");
+    }
+
+    void testVerifierReponse(){
+    	String test = "faux";
+    	CSVFile fichiercsv=loadCSV("../ressources/questions_reponses_stock.csv");
+
+    	if (verifierBonneReponse('1',fichiercsv,1)){
+    		test ="vrai";
+    	}
+    	
+    	assertEquals(test, "vrai");
+    }
 }
