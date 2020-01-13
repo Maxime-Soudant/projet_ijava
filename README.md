@@ -1,4 +1,4 @@
-# <Free School>
+## <Free School>
 
 	<DELESTREE Lucas> <SOUDANT Maxime> <Groupe A>
 
@@ -35,3 +35,9 @@
 	./run.sh afin de lancer le jeu
 
 	(il n'y a pas de mode graphique)
+
+## Informations complémentaires
+
+	La vidéo n'a pas été faite comme demandé car les indications de montage ne fonctionnaient pas
+
+	Le jeu possède une bande son, il faut donc des enceintes ou un casque pour profiter du jeu à 100%

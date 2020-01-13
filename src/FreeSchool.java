@@ -408,7 +408,7 @@ class FreeSchool extends Program{
 			clearScreen();
 			cursor(20,50);
 			print("Vous avez vaincu "+loustique.nom+" félicitations !");
-			delay(2500);
+			delay(1000);
 		}else{
 			clearScreen();
 			cursor(25,50);
